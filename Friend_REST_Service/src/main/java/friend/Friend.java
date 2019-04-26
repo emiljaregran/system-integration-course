@@ -59,6 +59,16 @@ public class Friend implements Serializable
         return phonenumbers;
     }
     
+    public String getPhonenumber()
+    {
+        return this.phonenumbers.get(0);
+    }
+    
+    public void setPhonenumber(String phonenumber)
+    {
+        this.phonenumbers.add(phonenumber);
+    }
+    
     @XmlElement
     public String getNickname()
     {

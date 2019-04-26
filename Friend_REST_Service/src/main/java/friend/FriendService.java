@@ -17,7 +17,8 @@ public class FriendService
 {
     //private final static IFriendDAO friendDAO = new FriendDAO();
     //private final static IFriendDAO friendDAO = new FriendSerDAO();
-    private final static IFriendDAO friendDAO = new FriendJSONDAO();
+    //private final static IFriendDAO friendDAO = new FriendJSONDAO();
+    private final static IFriendDAO friendDAO = new FriendDBDAO();
     
     @POST
     @Path("/friend/add")
@@ -157,6 +158,8 @@ public class FriendService
         
         for (Friend friend : friends)
         {
+            stringBuilder.append(friend.getId());
+            stringBuilder.append("<br>");
             stringBuilder.append(friend.getName());
             stringBuilder.append("<br>");
             stringBuilder.append(friend.getNickname());
