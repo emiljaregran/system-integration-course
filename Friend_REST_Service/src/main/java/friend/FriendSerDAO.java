@@ -1,6 +1,7 @@
 package friend;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 public class FriendSerDAO implements IFriendDAO
@@ -41,7 +42,7 @@ public class FriendSerDAO implements IFriendDAO
     }
     
     @Override
-    public void addFriend(String name, String nickname, String birthday, String phonenumber)
+    public void addFriend(String name, String nickname, Date birthday, String phonenumber)
     {
         int id = getHighestId() + 1;
         

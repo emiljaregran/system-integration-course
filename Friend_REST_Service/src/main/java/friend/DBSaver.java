@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.sql.*;
+import java.util.Date;
 
 /*
  ONLY USED FOR INITIALIZING THE DATABASE ONCE! 
@@ -21,11 +22,11 @@ public class DBSaver
         importDatabaseSettings();
         clearDatabase();
         
-        insertIntoDatabase(new Friend(0, "Baran Lundgren", "Barr", "12 Januari", "08-984934", "0911-6656594", "042-6794086"));
-        insertIntoDatabase(new Friend(1, "Nataliä Bengtsson", "Natt", "23 Februari", "042-6794086"));
-        insertIntoDatabase(new Friend(2, "Michel Svensson", "Micke", "16 Mars", "0140-7737207"));
-        insertIntoDatabase(new Friend(3, "Zeinab Lund", "Zeb", "28 Februari", "0911-6656594", "042-6794086"));
-        insertIntoDatabase(new Friend(4, "Gottfrid Olsson", "Gotte", "25 Oktober", "0922-8572039"));
+        insertIntoDatabase(new Friend(0, "Baran Lundgren", "Barr", new Date(2000 - 1900, 2, 4), "08-984934", "0911-6656594", "042-6794086"));
+        insertIntoDatabase(new Friend(1, "Nataliä Bengtsson", "Natt", new Date(1976 - 1900, 2, 23), "042-6794086"));
+        insertIntoDatabase(new Friend(2, "Michel Svensson", "Micke", new Date(1985 - 1900, 3, 16), "0140-7737207"));
+        insertIntoDatabase(new Friend(3, "Zeinab Lund", "Zeb", new Date(1999 - 1900, 2, 28), "0911-6656594", "042-6794086"));
+        insertIntoDatabase(new Friend(4, "Gottfrid Olsson", "Gotte", new Date(1978 - 1900, 10, 25), "0922-8572039"));
         
         System.out.println("Wrote friends to database.");
     }
@@ -72,7 +73,7 @@ public class DBSaver
             PreparedStatement statement = connection.prepareStatement("INSERT INTO friend (name, nickname, birthday, phonenumber) VALUES (?, ?, ?, ?)");
             statement.setString(1, friend.getName());
             statement.setString(2, friend.getNickname());
-            statement.setString(3, friend.getBirthday());
+            statement.setDate(3, new java.sql.Date(friend.getBirthday().getTime()));
             statement.setString(4, friend.getPhonenumber());
             statement.executeUpdate();
         }

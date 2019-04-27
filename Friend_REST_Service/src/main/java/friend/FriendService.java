@@ -1,5 +1,6 @@
 package friend;
 
+import java.sql.Date;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -164,7 +165,7 @@ public class FriendService
             stringBuilder.append("<br>");
             stringBuilder.append(friend.getNickname());
             stringBuilder.append("<br>");
-            stringBuilder.append(friend.getBirthday());
+            stringBuilder.append(friend.getBirthday().toString());
             stringBuilder.append("<br>");
             
             List<String> phonenumbers = friend.getPhonenumbers();

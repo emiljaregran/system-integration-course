@@ -6,11 +6,15 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
+import java.util.Date;
 
 public class Main
 {
@@ -58,7 +62,7 @@ public class Main
         
         System.out.println("\nName: " + friend.getName());
         System.out.println("Nickname: "+ friend.getNickname());
-        System.out.println("Birthday: " + friend.getBirthday());
+        System.out.println("Birthday: " + friend.getBirthday().toString());
         System.out.println("Phone numbers: " + friend.getPhonenumbers());
     }
     
@@ -67,10 +71,22 @@ public class Main
         int id = getUserInputInt("ID");
         String name = getUserInput("name");
         String nickname = getUserInput("nickname");
-        String birthday = getUserInput("birthday");
+        String birthday = getUserInput("birthday (yyyy/mm/dd)");
         String phonenumber = getUserInput("phone number");
         
-        Friend newFriend = new Friend(id, name, nickname, birthday, phonenumber);
+        Date date = new Date();
+        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        
+        try
+        {
+           date = formatter.parse(birthday);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        
+        Friend newFriend = new Friend(id, name, nickname, date, phonenumber);
         
         ClientResponse clientResponse = service.path("rest/FriendService/friend/add").accept(MediaType.APPLICATION_XML).post(ClientResponse.class, newFriend);
         Response response = clientResponse.getEntity(Response.class);
@@ -86,7 +102,7 @@ public class Main
         String birthday = getUserInput("birthday");
         String phonenumber = getUserInput("phone number");
         
-        Friend newFriend = new Friend(id, name, nickname, birthday, phonenumber);
+        Friend newFriend = new Friend(id, name, nickname, new Date(2000 - 1900, 12, 24), phonenumber);
         
         ClientResponse clientResponse = service.path("rest/FriendService/friend/upsert").accept(MediaType.APPLICATION_XML).post(ClientResponse.class, newFriend);
         Response response = clientResponse.getEntity(Response.class);
@@ -115,7 +131,7 @@ public class Main
             System.out.println("Id: " + friend.getId());
             System.out.println("Name: " + friend.getName());
             System.out.println("Nickname: " + friend.getNickname());
-            System.out.println("Birthday: " + friend.getBirthday());
+            System.out.println("Birthday: " + friend.getBirthday().toString());
             System.out.println("Phone numbers: " + friend.getPhonenumbers().toString());
             System.out.println("");
         }

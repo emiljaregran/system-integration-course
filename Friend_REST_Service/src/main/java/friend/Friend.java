@@ -2,6 +2,7 @@ package friend;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,15 +15,16 @@ public class Friend implements Serializable
     private int id;
     private String name;
     private String nickname;
-    private String birthday;
+    private Date birthday;
     
     public Friend(){}
     
-    public Friend(int id, String name, String nickname, String birthday, String... phonenumbers)
+    public Friend(int id, String name, String nickname, Date birthday, String... phonenumbers)
     {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
+        this.birthday = birthday;
         this.birthday = birthday;
         
         for (String phonenumber : phonenumbers)
@@ -81,12 +83,12 @@ public class Friend implements Serializable
     }
     
     @XmlElement
-    public String getBirthday()
+    public Date getBirthday()
     {
         return birthday;
     }
     
-    public void setBirthday(String birthday)
+    public void setBirthday(Date birthday)
     {
         this.birthday = birthday;
     }

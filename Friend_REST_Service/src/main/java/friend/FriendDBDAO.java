@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -64,7 +65,7 @@ public class FriendDBDAO implements IFriendDAO
                 friend.setId(result.getInt("id"));
                 friend.setName(result.getString("name"));
                 friend.setNickname(result.getString("nickname"));
-                friend.setBirthday(result.getString("birthday"));
+                friend.setBirthday(result.getDate("birthday"));
                 friend.setPhonenumber(result.getString("phonenumber"));
                 
                 friends.add(friend);
@@ -96,7 +97,7 @@ public class FriendDBDAO implements IFriendDAO
                 friend.setId(result.getInt("id"));
                 friend.setName(result.getString("name"));
                 friend.setNickname(result.getString("nickname"));
-                friend.setBirthday(result.getString("birthday"));
+                friend.setBirthday(result.getDate("birthday"));
                 friend.setPhonenumber(result.getString("phonenumber"));
             }
         }
@@ -118,7 +119,7 @@ public class FriendDBDAO implements IFriendDAO
             PreparedStatement statement = connection.prepareStatement("INSERT INTO friend (name, nickname, birthday, phonenumber) VALUES (?, ?, ?, ?)");
             statement.setString(1, friend.getName());
             statement.setString(2, friend.getNickname());
-            statement.setString(3, friend.getBirthday());
+            statement.setDate(3, new java.sql.Date(friend.getBirthday().getTime()));
             statement.setString(4, friend.getPhonenumber());
             statement.executeUpdate();
         }
@@ -129,7 +130,7 @@ public class FriendDBDAO implements IFriendDAO
     }
     
     @Override
-    public void addFriend(String name, String nickname, String birthday, String phonenumber)
+    public void addFriend(String name, String nickname, Date birthday, String phonenumber)
     {   
         try (Connection connection = DriverManager.getConnection(settings.getProperty("connectionString"),
                                                                  settings.getProperty("name"),
@@ -138,7 +139,7 @@ public class FriendDBDAO implements IFriendDAO
             PreparedStatement statement = connection.prepareStatement("INSERT INTO friend (name, nickname, birthday, phonenumber) VALUES (?, ?, ?, ?)");
             statement.setString(1, name);
             statement.setString(2, nickname);
-            statement.setString(3, birthday);
+            statement.setDate(3, new java.sql.Date(birthday.getTime()));
             statement.setString(4, phonenumber);
             statement.executeUpdate();
         }
@@ -158,7 +159,7 @@ public class FriendDBDAO implements IFriendDAO
             PreparedStatement statement = connection.prepareStatement("UPDATE friend SET name=?, nickname=?, birthday=?, phonenumber=? WHERE id=?");
             statement.setString(1, friend.getName());
             statement.setString(2, friend.getNickname());
-            statement.setString(3, friend.getBirthday());
+            statement.setDate(3, new java.sql.Date(friend.getBirthday().getTime()));
             statement.setString(4, friend.getPhonenumber());
             statement.setInt(5, friend.getId());
             statement.executeUpdate();
